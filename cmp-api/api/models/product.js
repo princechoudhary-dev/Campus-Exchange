@@ -1,30 +1,29 @@
-import mongoose from "mongoose";
-import { College } from "./college.schema.js";
+import mongoose, { mongo } from "mongoose";
 
-export const productSchema = new mongoose.Schema(
+const productSchema = new mongoose.Schema(
   {
     title: {
       type: String,
       required: true,
     },
+    description: {
+      type: String,
+    },
     price: {
       type: Number,
       required: true,
     },
-    description: {
-      type: String,
-    },
-    category: {
-      type: String,
-    },
+    images: [
+      {
+        url: String,
+        public_id: String,
+      },
+    ],
     quantity: {
       type: Number,
     },
-
-    images: [{ url: String, public_id: String }],
-    instock: {
-      type: Boolean,
-      default: true,
+    category: {
+      type: String,
     },
     seller: {
       type: mongoose.Schema.Types.ObjectId,
@@ -34,8 +33,14 @@ export const productSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "College",
     },
+    inStock: {
+      type: Boolean,
+      default: true,
+    },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+  },
 );
 
 export const Product = mongoose.model("Product", productSchema);
